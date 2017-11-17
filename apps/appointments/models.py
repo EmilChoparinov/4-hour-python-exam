@@ -16,13 +16,16 @@ class AppointmentsManager(models.Manager):
         Adds an appointment to the user
         """
         response = []
+        print str(datetime.datetime.time(datetime.datetime.now()))[:5]
+        print data['time']
+        print data['time'] < str(datetime.datetime.time(datetime.datetime.now()))[:5]
         if not data['date']:
             response.append('Date field cannot be left empty')
         elif data['date'] < str(datetime.date.today()):
             response.append('Date has already passed')
         if not data['time']:
             response.append('Time field cannot be left empty')
-        elif data['time'] < str(datetime.datetime.time(datetime.datetime.now())):
+        elif data['time'] < str(datetime.datetime.time(datetime.datetime.now()))[:5] and data['date'] == str(datetime.date.today()):
             response.append('Time has already passed')
         if not data['task']:
             response.append('Tasks cannot be left empty')
@@ -30,7 +33,7 @@ class AppointmentsManager(models.Manager):
         if len(response) == 0:
             Appointments.objects.create(
                 task = data['task'],
-                status = "Pending",
+                status = "pending",
                 date = data['date'],
                 time = data['time'],
                 user = Users.objects.get(id=u_id)

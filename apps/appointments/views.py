@@ -19,6 +19,7 @@ def default(request):
     """
     Route for rendering the default page for this app
     """
+    Users.objects.updateAppointments(request.session['id'])
     context = {
         'user': Users.objects.get(id=request.session['id']),
         'date': datetime.datetime.now().strftime('%B %d, %Y'),

@@ -92,6 +92,20 @@ class UsersManager(models.Manager):
             else:
                 response['later'].append(appointment)
         return response
+
+    def updateAppointments(self, u_id):
+        """
+        Updates the users appointments from the last time site was accessed
+        """
+        print 'in update'
+        response = []
+        user = Users.objects.get(id=u_id)
+        for appointment in user.appointments.all():
+            if appointment.time < datetime.datetime.time(datetime.datetime.now()) and appointment.date <= datetime.date.today():
+                appointment.status = 'missed'
+                appointment.save()
+        user.save()
+
 class Users(models.Model):
     """
     Users class: contains all fields of the table lr_app_users
