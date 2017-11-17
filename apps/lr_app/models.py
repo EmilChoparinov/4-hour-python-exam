@@ -45,6 +45,8 @@ class UsersManager(models.Manager):
 
         if not data['date_of_birth']:
             response.append('Date field cannot be left empty')
+        elif data['date_of_birth'] > str(datetime.date.today()):
+            response.append('We cant go back in time yet!')
         if len(response) == 0:
             Users.objects.create(
                 name = data['name'],

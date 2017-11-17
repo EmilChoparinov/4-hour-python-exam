@@ -34,13 +34,13 @@
                 <td>Date</td>
                 <td>
                     <!-- ????????????????????? -->
-                    <input type="date" name="date" value="{{appointment.date|strftime}}">
+                    <input type="date" name="date" value="{{appointment.date|formater}}">
                 </td>
             </tr>
             <tr>
                 <td>Time</td>
                 <td>
-                    <input type="time" name="time" value="{{appointment.time}}">
+                    <input type="time" name="time" value="{{appointment.time|formater}}">
                 </td>
             </tr>
             <tr>

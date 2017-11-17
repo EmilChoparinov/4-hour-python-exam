@@ -20,12 +20,10 @@ class AppointmentsManager(models.Manager):
             response.append('Date field cannot be left empty')
         elif data['date'] < str(datetime.date.today()):
             response.append('Date has already passed')
-        # elif data['time'] < str(datetime.datetime.time(datetime.datetime.now())):
-        #     response.append('Time has already passed')
-
         if not data['time']:
             response.append('Time field cannot be left empty')
-
+        elif data['time'] < str(datetime.datetime.time(datetime.datetime.now())):
+            response.append('Time has already passed')
         if not data['task']:
             response.append('Tasks cannot be left empty')
 
@@ -76,7 +74,7 @@ class AppointmentsManager(models.Manager):
             a.time = data['time']
             a.save()
         return response
-    
+
 # Create your models here.
 class Appointments(models.Model):
     task = models.TextField()
