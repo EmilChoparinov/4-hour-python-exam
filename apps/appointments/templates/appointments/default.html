@@ -64,17 +64,12 @@
                             <th>Tasks</th>
                             <th>Time</th>
                             <th>Status</th>
-                            <th>Action</th>
                         </tr>
                         {% for appointment in appointments.later %}
                         <tr>
                             <td>{{appointment.task}}</td>
                             <td>{{appointment.date}}</td>
                             <td>{{appointment.status}}</td>
-                            <td>
-                                <a href="{{appointment.id}}/delete">Delete</a> |
-                                <a href="{{appointment.id}}/edit">Edit</a>
-                            </td>
                         </tr>
                         {% endfor %}
                     </table>
