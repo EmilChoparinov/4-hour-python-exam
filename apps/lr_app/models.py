@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
-
+import datetime
 import re, bcrypt
 
 # Create your models here.
@@ -75,6 +75,21 @@ class UsersManager(models.Manager):
             response.append('Password field cannot be left blank!')
         return response
 
+    def getAppointments(self, u_id):
+        """
+        gets the appointments for that user in a clean format
+        """
+        response = {
+            'today': [],
+            'later': []
+        }
+        user = Users.objects.get(id=u_id)
+        for appointment in user.appointments.all().order_by('-time'):
+            if appointment.date == datetime.date.today():
+                response['today'].append(appointment)
+            else:
+                response['later'].append(appointment)
+        return response
 class Users(models.Model):
     """
     Users class: contains all fields of the table lr_app_users
