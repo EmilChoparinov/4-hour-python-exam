@@ -3,82 +3,118 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+        crossorigin="anonymous">
+    <style>
+        .constrainA {
+            height: 27vh;
+            overflow: auto;
+        }
+
+        .constrainB {
+            height: 38vh;
+            overflow: auto;
+        }
+    </style>
     <title>What's Up</title>
 </head>
 
 <body>
-    <a href="/main/logout">Logout</a>
-    <h1>Hello, {{user.name}}</h1>
-    <h2>Here are you appointments for today, {{date}}</h2>
-    <table>
-        <tr>
-            <th>Tasks</th>
-            <th>Time</th>
-            <th>Status</th>
-            <th>Action</th>
-        </tr>
-        {% for appointment in appointments.today %}
-        <tr>
-            <td>{{appointment.task}}</td>
-            <td>{{appointment.time}}</td>
-            <td>{{appointment.status}}</td>
-            <td>
-                <a href="{{appointment.id}}/delete">Delete</a>
-                <a href="{{appointment.id}}/edit">Edit</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    <h2>Your other appointments</h2>
-    <table>
-        <tr>
-            <th>Tasks</th>
-            <th>Time</th>
-            <th>Status</th>
-            <th>Action</th>
-        </tr>
-        {% for appointment in appointments.later %}
-        <tr>
-            <td>{{appointment.task}}</td>
-            <td>{{appointment.date}}</td>
-            <td>{{appointment.status}}</td>
-            <td>
-                <a href="{{appointment.id}}/delete">Delete</a>
-                <a href="{{appointment.id}}/edit">Edit</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    <h2>Add Appointment</h2>
-    <form action="add" method="post">
-        {% csrf_token %}
-        <table>
-            <tr>
-                <td>Date</td>
-                <td>
-                    <input type="date" name="date">
-                </td>
-            </tr>
-            <tr>
-                <td>Time</td>
-                <td>
-                    <input type="time" name="time">
-                </td>
-            </tr>
-            <tr>
-                <td>Tasks</td>
-                <td>
-                    <input type="text" name="task">
-                </td>
-            </tr>
-        </table>
-        <input type="submit" value="Add">
-    </form>
-    {% if messages %} {% for message in messages %}
-    <div class="row">
-        <p style="color:red">{{message}}</p>
+    <nav class="navbar navbar-expand-lg">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+            </ul>
+            <div class="my-2 my-lg-0">
+                <a href="/main/logout" class="float-right mr-5 mt-3">Logout</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <h1 class="display-4">Hello, {{user.name}}</h1>
+        <div class="row ml-3">
+            <h2>Here are you appointments for today, {{date}}</h2>
+            <div class="container constrainA">
+                <table class="table">
+                    <tr>
+                        <th>Tasks</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                    {% for appointment in appointments.today %}
+                    <tr>
+                        <td>{{appointment.task}}</td>
+                        <td>{{appointment.time}}</td>
+                        <td>{{appointment.status}}</td>
+                        <td>
+                            <a href="{{appointment.id}}/delete">Delete</a> |
+                            <a href="{{appointment.id}}/edit">Edit</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+        <div class="row ml-5">
+            <div class="col-sm">
+                <h2 class="ml-3">Your other appointments</h2>
+                <div class="container constrainB">
+                    <table class="table">
+                        <tr>
+                            <th>Tasks</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                        {% for appointment in appointments.later %}
+                        <tr>
+                            <td>{{appointment.task}}</td>
+                            <td>{{appointment.date}}</td>
+                            <td>{{appointment.status}}</td>
+                            <td>
+                                <a href="{{appointment.id}}/delete">Delete</a> |
+                                <a href="{{appointment.id}}/edit">Edit</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+            <div class="col-sm">
+                <h2>Add Appointment</h2>
+                <div class="row ml-2">
+                    <div class="constrainB">
+                        <form action="add" method="post">
+                            {% csrf_token %}
+                            <table class="table">
+                                <tr>
+                                    <td>Date</td>
+                                    <td>
+                                        <input type="date" name="date" class="form-control">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Time</td>
+                                    <td>
+                                        <input type="time" name="time" class="form-control">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Tasks</td>
+                                    <td>
+                                        <input type="text" name="task" class="form-control">
+                                    </td>
+                                </tr>
+                            </table>
+                            <input type="submit" value="Add" class="form-control bg-primary text-white"> {% if messages %} {% for message in messages %}
+                            <p class="text-danger">{{message}}</p>
+                            {% endfor %} {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    {% endfor %} {% endif %}
 </body>
 
 </html>
