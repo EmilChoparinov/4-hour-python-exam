@@ -24,16 +24,11 @@ class UsersManager(models.Manager):
             list: a list of responses from the manager, if any response is given; that data is rejected
         """
         response = []
-        if not data['first_name']:
+        if not data['name']:
             response.append('Name field cannot be left empty!')
-        elif not re.match(r'^[a-zA-Z ]+$', data['first_name']):
+        elif not re.match(r'^[a-zA-Z ]+$', data['name']):
             response.append('Name field can only contain alpha characters!')
-        
-        if not data['last_name']:
-            response.append('Alias field cannot be left empty!')
-        elif not re.match(r'^[a-zA-Z ]+$', data['last_name']):
-            response.append('Aame field can only contain alpha characters!')
-
+            
         if not data['email']:
             response.append('Email field cannot be left empty!')
         elif not re.match(r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)', data['email']):
@@ -48,11 +43,13 @@ class UsersManager(models.Manager):
         elif data['password'] != data['confirm_password']:
             response.append('Passwords entered do not match!')
 
+        if not data['date_of_birth']:
+            response.append('Date field cannot be left empty')
         if len(response) == 0:
             Users.objects.create(
-                first_name = data['name'],
-                last_name = data['alias'],
+                name = data['name'],
                 email = data['email'],
+                date_of_birth = data['date_of_birth'],
                 password = bcrypt.hashpw(data['password'].encode(), bcrypt.gensalt())
             )
         return response

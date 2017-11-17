@@ -14,7 +14,7 @@ def default(request):
     """
     if 'id' not in request.session:
         return render(request, 'lr_app/lr.html')
-    return redirect('/{{DASH}}')
+    return redirect('/appointments')
 
 def register(request):
     """
@@ -25,9 +25,9 @@ def register(request):
         if len(response) != 0:
             for message in response:
                 messages.warning(request, message)
-            return redirect('/')
+            return redirect('/main')
         request.session['id'] = Users.objects.get(email=request.POST['email']).id
-    return redirect('/{{DASH}}')
+    return redirect('/appointments')
 
 def login(request):
     """
@@ -38,9 +38,9 @@ def login(request):
         if len(response) != 0:
             for message in response:
                 messages.warning(request,message)
-            return redirect('/')
+            return redirect('/main')
         request.session['id'] = Users.objects.get(email=request.POST['email']).id
-    return redirect('/{{DASH}}')
+    return redirect('/appointments')
 
 def logout(request):
     """
